@@ -3,55 +3,98 @@
 @tailwind utilities;
 
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Montserrat:ital,wght@0,500;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;700&display=swap');
 
 /* font-family: 'Fraunces', serif;
 font-family: 'Montserrat', sans-serif; */
 :root {
-  -Very-dark-blue: #1c232b;
--Dark-grayish-blue: hsl(228, 12%, 48%);
--White: hsl(0, 0%, 100%);
---Dark-cyan: #3c8067;
---Cream: hsl(30, 38%, 92%);
+  --Bright-Blue: #3a7bfd;
+--Check-Background: linear-gradient hsl(192, 100%, 67%) to #c058f3;
+
+  --Very-Dark-Blue: #161722;
+  --Very-Dark-Desaturated-Blue: hsl(235, 24%, 19%);
+  --Light-Grayish-Blue: hsl(234, 39%, 85%);
+  --Light-Grayish-Blue-hover: hsl(236, 33%, 92%);
+  --Dark-Grayish-Blue: hsl(234, 11%, 52%);
+  --Very-Dark-Grayish-Blue: #4d5066;
+  --Very-Dark-Grayish-Blue: hsl(237, 14%, 26%);
+
+
+  --Very-Light-Gray: hsl(0, 0%, 98%);
+--Very-Light-Grayish-Blue: hsl(236, 33%, 92%);
+--Light-Grayish-Blue: hsl(233, 11%, 84%);
+--Dark-Grayish-Blue: hsl(236, 9%, 61%);
+--Very-Dark-Grayish-Blue: hsl(235, 19%, 35%);
 }
 * {
   margin: 0;
   padding: 0;
 }
 body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: var(--Cream);
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-family: 'Josefin Sans', sans-serif;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
-.section {
-  @apply lg:w-[600px] lg:h-[500px] bg-white w-[300px] h-auto rounded-md lg:flex overflow-hidden block
+.wrapper {
+  @apply bg-[#161722] h-[100vh] w-[100vw] text-slate-50
+}
+.Landing {
+  @apply flex flex-col
+}
+.header {
+  @apply flex py-3 px-6 justify-around bg-[#c058f3] items-center
 }
 
-.Image {
-  @apply object-cover lg:w-1/2 lg:h-full w-full h-[300px] 
+.Btn-div {
+  @apply flex
 }
-.text_div {
-  @apply p-8
-}
-
-p {
-  @apply text-base pb-6 text-slate-500
-}
-
-h1 {
-  font-family: 'Fraunces', serif;
-}
-
-h1 {
-  @apply text-3xl mb-8 flex justify-start items-center font-light
-}
-
-
 .btn {
-  @apply bg-[#3c8067] w-full flex justify-center items-center py-3 text-white rounded-md hover:bg-[#1c232b]
+  @apply lg:mr-4  py-3 px-4 lg:px-6 sm:w-36  cursor-pointer hover:bg-[#81a1e2] hover:transition-all hover:duration-300 flex items-center justify-center
+}
+
+.sign-btn {
+  @apply w-full bg-[#3a7bfd]  mr-0 mt-4
+}
+.signUp {
+  @apply bg-[#3a7bfd] animate-pulse
+}
+
+.Hero {
+  @apply absolute lg:top-[30%] lg:left-[20%] lg:right-[20%]
+  top-[25%] left-[10%] right-[10%] text-center flex flex-col items-center
+}
+
+.Hero h1 {
+  @apply lg:text-7xl text-5xl font-bold mb-3
+}
+
+.Hero p {
+  @apply text-2xl mb-8
+}
+
+.Sign {
+  @apply flex flex-col w-full h-full justify-center items-center justify-center 
+}
+
+.input-div {
+  @apply flex flex-col py-2
+}
+
+.sign-in {
+  @apply w-[400px] flex flex-col items-start p-8 shadow-xl bg-[#212230]
+}
+
+.sign-in input {
+  @apply w-full h-[40px] px-4 text-slate-900 outline-none border-none 
+}
+
+.label {
+  @apply mt-6
+}
+.google {
+  @apply  w-full flex justify-center items-center cursor-pointer border-2 border-white px-4 py-2 rounded-2xl
+}
+.link {
+  @apply flex mt-3
 }
