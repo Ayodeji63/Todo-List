@@ -3,15 +3,11 @@ import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import {useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
-
+import { useUnique } from "../Context/uniquekey";
 const SignUp = () => {
-  const {createUser, signWithGoogle} = useAuth()
+  const {createUser, signWithGoogle, data, setData} = useAuth()
   const navigate = useNavigate()
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-    fullname: "",
-  });
+  
 
   const handleInputs = (event) => {
     let inputs = { [event.target.name]: event.target.value };
@@ -44,7 +40,7 @@ const SignUp = () => {
           <img src="../googicon.webp" alt="" width={35} />
           <p className="ml-2">Sign Up with Gmail</p>
         </div>
-        <form className="w-full" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
           <div className="input-div">
             <label className="mt-6">Full Name</label>
             <input

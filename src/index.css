@@ -9,15 +9,15 @@
 font-family: 'Montserrat', sans-serif; */
 :root {
   --Bright-Blue: #3a7bfd;
---Check-Background: linear-gradient hsl(192, 100%, 67%) to #c058f3;
+--Check-Background: linear-gradient #57ddff to #c058f3;
 
   --Very-Dark-Blue: #161722;
   --Very-Dark-Desaturated-Blue: hsl(235, 24%, 19%);
   --Light-Grayish-Blue: hsl(234, 39%, 85%);
   --Light-Grayish-Blue-hover: hsl(236, 33%, 92%);
-  --Dark-Grayish-Blue: hsl(234, 11%, 52%);
-  --Very-Dark-Grayish-Blue: #4d5066;
-  --Very-Dark-Grayish-Blue: hsl(237, 14%, 26%);
+  --Dark-Grayish-Blue: #777a92;
+  --Very-Dark-Grayish-Blue: #2c2e3b;
+  --Very-Dark-Grayish-Blue: #222225;
 
 
   --Very-Light-Gray: hsl(0, 0%, 98%);
@@ -35,9 +35,25 @@ body {
   min-width: 100vw;
   min-height: 100vh;
 }
+.checkbox{
+  @apply flex items-start h-[20px] w-[20px] rounded-[50%] mr-4 border-2 border-x-slate-50 cursor-pointer
+}
+.check {
+  @apply flex items-start h-[20px] w-[20px] rounded-[50%] mr-4  border-x-slate-50 cursor-pointer
 
+}
+
+
+.checkClick {
+  @apply bg-gradient-to-r from-[#2F80ED] to-[#1CB5E0]
+}
 .wrapper {
-  @apply bg-[#161722] h-[100vh] w-[100vw] text-slate-50
+  @apply bg-[#161722]  w-[100vw] text-slate-50  
+  min-h-screen
+}
+
+.dark {
+  @apply bg-[#161722] text-[#777a92] text-sm
 }
 .Landing {
   @apply flex flex-col
@@ -82,11 +98,15 @@ body {
 }
 
 .sign-in {
-  @apply w-[400px] flex flex-col items-start p-8 shadow-xl bg-[#212230]
+  @apply lg:w-[400px] flex flex-col items-start p-8 shadow-xl bg-[#212230]
 }
 
 .sign-in input {
   @apply w-full h-[40px] px-4 text-slate-900 outline-none border-none 
+}
+
+.form {
+  @apply h-full flex flex-col
 }
 
 .label {
@@ -97,4 +117,73 @@ body {
 }
 .link {
   @apply flex mt-3
+}
+
+.Todo__page__wrapper {
+  @apply relative 
+}
+
+.img {
+  @apply absolute top-[0] left-0
+}
+
+.TodoPage__header {
+  @apply  py-12 sm:px-32 px-12 flex justify-between w-full z-[1000] 
+}
+
+.TodoPage__header h1 {
+  @apply text-3xl font-extrabold
+}
+
+.Todo__list {
+  @apply  flex justify-center items-start w-[400px] mt-0 mb-0 mr-auto ml-auto flex-col z-40
+}
+
+form {
+  @apply w-full h-[50px] flex mb-12
+}
+.Todo__input {
+  @apply  h-[full] w-[100%] border-none outline-none px-6
+}
+.plus {
+  @apply bg-[#3a7bfd] h-full w-[40px] px-2 text-[#fff]
+}
+
+.Todo__items {
+  @apply w-full shadow-lg 
+}
+
+.Todo__item__div {
+  @apply p-4 border-b-[0.5px] border-y-slate-800 flex items-start w-full h-full
+}
+
+.item {
+  @apply flex justify-between items-center w-full cursor-pointer
+}
+
+.icons {
+  display: none;
+}
+.icons {
+  @apply cursor-pointer 
+}
+
+.item:hover .icons {
+ display: flex;
+}
+
+.bottom__actions {
+  @apply flex w-full justify-between p-4 
+}
+
+.bottom__actions p {
+  @apply cursor-pointer
+}
+
+.bottom__actions ul {
+  @apply list-none flex
+}
+
+.bottom__actions ul li {
+  @apply mr-2 cursor-pointer hover:text-[#3a7bfd]
 }

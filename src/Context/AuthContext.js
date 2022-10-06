@@ -40,8 +40,14 @@ export const AuthContextProvider = ({children}) => {
             unsubscribe()
         }
     }, [])
+
+    const [data, setData] = useState({
+        email: "",
+        password: "",
+        fullname: "",
+      });
     return (
-        <UserContext.Provider value={{createUser, user, logout, signIn, signWithGoogle}}>
+        <UserContext.Provider value={{createUser, user, logout, signIn, signWithGoogle, data, setData}}>
             {children}
         </UserContext.Provider>
     )

@@ -46,7 +46,7 @@ const SignIn = () => {
           <p className="ml-2">Continue with Gmail</p>
         </div>
 
-        <form className="w-full" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
   
           <div className="input-div">
             <label className="label">Email</label>
