@@ -4,27 +4,28 @@ import { useNavigate } from "react-router-dom";
 import { AiFillSetting, AiOutlinePlus } from "react-icons/ai";
 import TodoItem from "../components/TodoItem";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodo, setTodo } from "../redux/todoSlice";
-import { createTodoAsync } from "../redux/todoSlice";
+import { createTodoAsync, deleteTodoAsync } from "../redux/todoSlice";
 import {
+  addDoc,
   collection,
+  deleteDoc,
   onSnapshot,
   query,
-  querySnapshot,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import { useUnique } from "../Context/uniquekey";
-import { async } from "@firebase/util";
+import { doc } from "firebase/firestore";
 
 const TodoPage = () => {
-  const [count, setCount] = useState([]);
+  const [todoItems, setTodoItems] = useState([])
+  const [length, setLength] = useState(0)
   const [input, setInput] = useState("");
   const { logout, user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todose);
+  let itemsLeft;
+  // let todos = useSelector((state) => state.todose);
+  
 
-  console.log(useUnique());
   const handleLogout = async () => {
     try {
       await logout();
@@ -38,42 +39,73 @@ const TodoPage = () => {
     setInput(e.target.value);
   };
 
-  const onSubmit =async (e) => {
+  //Create todo
+  const onSubmit = async (e) => {
     e.preventDefault();
+    setInput('')
     if (input) {
-      dispatch(
-       await createTodoAsync({
-          title: input,
-        })
-      );
-      setInput("");
+      const collectionRef = collection(db, 'todos')
+      await addDoc(collectionRef, {
+        title:input,
+        completed:false
+      });
     }
   };
-  //Create todo
 
   //Read todo
-
-
+  const q = query(collection(db, 'todos'));
   useEffect(() => {
-    const q = query(collection(db, 'todos'));
+    let todosArr = [];
     const unsubscribe = 
         onSnapshot(q, (querySnapshot) => {
-          let todosArr = [];
           querySnapshot.forEach((doc) => {
             todosArr.push({ ...doc.data(), id: doc.id });
           });
-         dispatch( setTodo(todosArr))
+          setTodoItems(todosArr)
+          setLength(todosArr.filter(todo => todo.completed === false).length)
+          todosArr = [];
         });
-    
     return () => unsubscribe();
   }, []);
 
-  
+console.log(todoItems);
+ 
+  const getActiveData = (param) => {
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      let activeArr = [];
+      querySnapshot.forEach((doc) => {
+        activeArr.push({...doc.data(), id:doc.id});
+      })
+      if (param == 'active') {
+        let retActive = activeArr.filter((todo) => todo.completed == false);
+        setTodoItems(retActive)
+      } else if (param == 'complete') {
+        let retComplete = activeArr.filter(todo => todo.completed == true)
+        setTodoItems(retComplete)
+      } else {
+        setTodoItems(activeArr)
+      }
+    })
+  }
 
-  // delete todo
+  const clearCompleted = () => {
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      let activeArr = [];
+      querySnapshot.forEach((doc) => {
+        activeArr.push({...doc.data(), id:doc.id});
+      })
+      activeArr.forEach(async el => {
+        if (el.completed == true) {
+          await deleteDoc(doc(db, 'todos', el.id))
+          alert("Completed cleared")
+        }
+      })
+    })
+  }
+
+
   return (
     <section className=" Todo__page__wrapper">
-
       <div className="TodoPage__header z-[1] sticky">
         <h1>UltiToDo</h1>
         <p>
@@ -94,29 +126,30 @@ const TodoPage = () => {
             <AiOutlinePlus size={30} className="plus" />
           </button>
         </form>
-        
-      <div className="dark Todo__items ">
-        {todos.map((todo) => (
-          <TodoItem
-            key={todo.id}
-            id={todo.id}
-            title={todo.title}
-            completed={todo.completed}
-            input={input}
-            setInput={setInput}
-          />
-        ))}
-        <div className="bottom__actions">
-          <p>5 items left</p>
-          <ul>
-            <li>All</li>
-            <li>Active</li>
-            <li>Completed</li>
-          </ul>
 
-          <p>Clear Completed</p>
+        <div className="dark Todo__items ">
+          {todoItems.map((todo) => (
+      <TodoItem
+        key={todo.id}
+        id={todo.id}
+        title={todo.title}
+        completed={todo.completed}
+        input={input}
+        setInput={setInput}
+      /> ))}
+
+          {todoItems.length > 0 && <div className="bottom__actions">
+            <p>{length} items left</p>
+            <ul>
+              <li onClick={() => getActiveData()}>All</li>
+              <li onClick={() => getActiveData('active')}>Active</li>
+              <li onClick={() => getActiveData('complete')}>Completed</li>
+            </ul>
+
+            <p onClick={clearCompleted}>Clear Completed</p>
+          </div>  }
+
         </div>
-      </div>
       </div>
 
       <img
@@ -124,7 +157,6 @@ const TodoPage = () => {
         className="h-[250px] w-full img"
         alt=""
       />
-
     </section>
   );
 };

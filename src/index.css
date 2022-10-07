@@ -34,6 +34,7 @@ body {
   font-family: 'Josefin Sans', sans-serif;
   min-width: 100vw;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 .checkbox{
   @apply flex items-start h-[20px] w-[20px] rounded-[50%] mr-4 border-2 border-x-slate-50 cursor-pointer

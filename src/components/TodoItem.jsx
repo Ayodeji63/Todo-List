@@ -29,8 +29,6 @@ const TodoItem = ({ title, completed, id, input, setInput }) => {
  
  
 
-  
-
   return (
     <div className="Todo__item__div">
       <div onClick={handleComplete}>
