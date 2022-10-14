@@ -6,7 +6,7 @@ import { useAuth } from "../Context/AuthContext";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const {signIn, signWithGoogle} = useAuth();
+  const {signIn, signWithGoogle, loading, setLoading} = useAuth();
 
   const [data, setData] = useState({
     email: "",
@@ -21,10 +21,13 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
       e.preventDefault();
-    try {
-      await signIn(data.email, data.password)
-      navigate('/todoPage')
-    } catch (error) {
+      setLoading(true)
+      try {
+        await signIn(data.email, data.password)
+        setLoading(false)
+        navigate('/list')
+      } catch (error) {
+      setLoading(false)
       alert(e.message)
     }
   };
@@ -32,7 +35,7 @@ const SignIn = () => {
   const withGoogle = async () => {
     try {
       await signWithGoogle()
-      navigate('/todoPage')
+      navigate('/list')
     } catch (e) {
       alert(e.message)
     }

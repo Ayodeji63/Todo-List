@@ -5,7 +5,7 @@ import {useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { useUnique } from "../Context/uniquekey";
 const SignUp = () => {
-  const {createUser, signWithGoogle, data, setData} = useAuth()
+  const {createUser, signWithGoogle, data, setData, loading, setLoading} = useAuth()
   const navigate = useNavigate()
   
 
@@ -16,10 +16,13 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await createUser(data.email, data.password)
-      navigate('/todoPage')
+      setLoading(false);
+      navigate('/list')
     } catch(e) {
+      setLoading(false);
       alert(e.message)
     }
   };
@@ -27,7 +30,7 @@ const SignUp = () => {
   const withGoogle = async () => {
     try {
       await signWithGoogle()
-      navigate('/todoPage')
+      navigate('/list')
     } catch (e) {
       alert(e.message)
     }

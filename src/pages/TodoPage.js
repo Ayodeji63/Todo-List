@@ -8,12 +8,13 @@ import { createTodoAsync, deleteTodoAsync } from "../redux/todoSlice";
 import {
   addDoc,
   collection,
-  deleteDoc,
+  deleteDoc, 
   onSnapshot,
   query,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { doc } from "firebase/firestore";
+import { useConxt } from "../Context/Context";
 
 const TodoPage = () => {
   const [todoItems, setTodoItems] = useState([])
@@ -22,8 +23,6 @@ const TodoPage = () => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  let itemsLeft;
-  // let todos = useSelector((state) => state.todose);
   
 
   const handleLogout = async () => {
@@ -106,12 +105,7 @@ console.log(todoItems);
 
   return (
     <section className=" Todo__page__wrapper">
-      <div className="TodoPage__header z-[1] sticky">
-        <h1>UltiToDo</h1>
-        <p>
-          <AiFillSetting size={30} className=" cursor-pointer" />
-        </p>
-      </div>
+      
 
       <div className="Todo__list z-[1] sticky">
         <form className="dark" onSubmit={onSubmit}>
@@ -152,11 +146,7 @@ console.log(todoItems);
         </div>
       </div>
 
-      <img
-        src="./todo-app-main/images/bg-desktop-dark.jpg"
-        className="h-[250px] w-full img"
-        alt=""
-      />
+      
     </section>
   );
 };
